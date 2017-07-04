@@ -96,14 +96,26 @@ foreach ($noms as $nom){
 //Carte de fidélité : *Oui (Si le client en possède une) ou Non (s'il n'en possède pas)*
 //Numéro de carte : *Numéro de la carte fidélité du client s'il en possède une.*
 
-$lastName = $bdd->query('SELECT * FROM clients');
+// le code ci-dessous ne fonctionne pas //
+$lastName = $bdd->query("SELECT * CASE WHEN type=TRUE, THEN 'OK' ELSE 'NON' FROM clients");
 $donnees = $lastName->fetchAll();
 
-echo ' <p>EXERCICE 7</p><br>';
-foreach ($donnees as $lastName){
-    echo '<li> Nom: ' .$lastName->lastName. '<br>';
-    echo '<li>Prénom: ' .$lastName->firstName. '</li><br/>';
+echo '<p>EXERCICE 7</p><br>';
+foreach ($donnees as $lastName) {
+    echo '<li> Nom: ' . $lastName->lastName . '<br>';
+//    echo '<li>Prénom: ' . $lastName->firstName . '</li><br/>';
     echo '</li>';
 }
+// le code ci-dessus ne fonctionne pas //
 
+//
+//// POUR SECURISER LE CODE AVEC PHP CONTRE DES INJECTIONS NUISIBLES MYSQL
+//function sanitize_string($str) {
+//    if (get_magic_quotes_gpc()) {
+//        $sanitize = mysqli_real_escape_string(stripslashes($str));
+//    } else {
+//        $sanitize = mysqli_real_escape_string($str);
+//    }
+//    return $sanitize;
+//}
 ?>
